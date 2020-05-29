@@ -1,4 +1,4 @@
-package br.com.doandersonferreira.forum.modelo;
+package br.com.doandersonferreira.forum.model;
 
 public enum StatusTopico {
 	

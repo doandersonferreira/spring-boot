@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.doandersonferreira.forum.controller.dto.TopicoDto;
-import br.com.doandersonferreira.forum.modelo.Curso;
-import br.com.doandersonferreira.forum.modelo.Topico;
+import br.com.doandersonferreira.forum.model.Curso;
+import br.com.doandersonferreira.forum.model.Topico;
 
 @RestController
 public class TopicosController {
