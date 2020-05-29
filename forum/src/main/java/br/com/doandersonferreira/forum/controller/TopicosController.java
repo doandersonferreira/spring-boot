@@ -49,11 +49,10 @@ public class TopicosController {
 	public ResponseEntity<TopicoDto> cadastrar(@RequestBody TopicoForm form, UriComponentsBuilder uriBuilder) {
 
 		Topico topico = form.converter(cursoRepository);
-		System.out.println(topico.getTitulo());
-		System.out.println(topico.getMensagem());
-		System.out.println(topico.getCurso());
 		topicoRepository.save(topico);
 		
+		// Implementando o retorno do código HTTP (201 - Created) e o recurso
+		// no corpo
 		URI uri = uriBuilder.path("topicos/{id}").buildAndExpand(topico.getId()).toUri();
 		return ResponseEntity.created(uri).body(new TopicoDto(topico));
 	}
