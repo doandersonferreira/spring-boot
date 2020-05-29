@@ -3,7 +3,6 @@ package br.com.doandersonferreira.forum.controller.form;
 import br.com.doandersonferreira.forum.model.Curso;
 import br.com.doandersonferreira.forum.model.Topico;
 import br.com.doandersonferreira.forum.repository.CursoRepository;
-import br.com.doandersonferreira.forum.repository.TopicoRepository;
 
 public class TopicoForm {
 
@@ -36,7 +35,7 @@ public class TopicoForm {
 	}
 
 	public Topico converter(CursoRepository cursoRepository) {
-		Curso curso = cursoRepository.findByNome(this.nomeCurso);
+		Curso curso = cursoRepository.findByNome(nomeCurso);
 		return new Topico(titulo,mensagem,curso);
 	}
 
