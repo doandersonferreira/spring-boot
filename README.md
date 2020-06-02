@@ -1,6 +1,11 @@
 # spring-boot-forum
 Projeto de forum baseado no framework Spring Boot para desenvolvimento de uma API Rest. 
 
+## Pontos interessantes para estudo
+
+- Lambdas
+- Stream
+
 ## Bean Validation
 
 Para validação dos atributos enviados no corpo das requisições.
