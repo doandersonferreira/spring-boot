@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,12 +46,12 @@ public class TopicosController {
 
 	
 	@GetMapping // Mapeado o método GET para o path '/'
-	public Page<TopicoDto> lista(@RequestParam(required = false) String nomeCurso,
-									@RequestParam int pagina, @RequestParam int qtd,
-									@RequestParam String ordenacao){		
-
-		// Abstracao do Spring Data para implementar paginacao
-		Pageable paginacao = PageRequest.of(pagina, qtd, Direction.ASC, ordenacao);
+	public Page<TopicoDto> lista(@RequestParam(required = false) String nomeCurso, 
+			// Definicao do Pageable diretamente no metodo
+			// Atributos de paginacao e ordenacao opcionais e permite definir o default
+			// ex. da chamada '/topicos?page=0&size=10&sort=id,desc'
+			@PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.DESC) Pageable paginacao){		
+			
 		
 		if(nomeCurso == null) {
 			// Obtem lista de tópico do banco de dados
