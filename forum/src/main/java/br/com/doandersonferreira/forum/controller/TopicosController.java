@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,6 +53,7 @@ public class TopicosController {
 	}
 	
 	@PostMapping // Mapeado o método POST para o path '/'
+	@Transactional // Metodos de escrita (write, update, delete) devem ser anotados para indicar ao Spring que commite ao final da transacao
 	public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Valid TopicoForm form, UriComponentsBuilder uriBuilder) {
 
 		Topico topico = form.converter(cursoRepository);
@@ -71,12 +73,21 @@ public class TopicosController {
 	}
 	
 	@PutMapping("/{id}") // Mapeado o método PUT para o path '/{id}'
-	@Transactional // Indica ao Spring que a atualizacao realizada deve ser commitada ao final do metodo
+	@Transactional
 	public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm form) {
 		Topico topico = form.atualizar(id, topicoRepository);
 		
 		return ResponseEntity.ok(new TopicoDto(topico));
 
+	}
+	
+	@DeleteMapping("/{id}")
+	@Transactional
+	public ResponseEntity<?> remover(@PathVariable Long id){
+		
+		topicoRepository.deleteById(id);
+		return ResponseEntity.ok().build();
+		
 	}
 	
 }
