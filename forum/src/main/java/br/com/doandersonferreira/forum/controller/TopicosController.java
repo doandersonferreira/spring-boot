@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -66,6 +67,7 @@ public class TopicosController {
 	
 	@PostMapping // Mapeado o método POST para o path '/'
 	@Transactional // Metodos de escrita (write, update, delete) devem ser anotados para indicar ao Spring que commite ao final da transacao
+	@CacheEvict(value="listaDeTopicos",allEntries = true) // Limpa cache de listaDeTopicos devido a uma escrita na base de dados
 	public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Valid TopicoForm form, UriComponentsBuilder uriBuilder) {
 
 		Topico topico = form.converter(cursoRepository);
@@ -91,6 +93,7 @@ public class TopicosController {
 	
 	@PutMapping("/{id}") // Mapeado o método PUT para o path '/{id}'
 	@Transactional
+	@CacheEvict(value="listaDeTopicos",allEntries = true) // Limpa cache de listaDeTopicos devido a uma escrita na base de dados
 	public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm form) {
 
 		Optional<Topico> optional = topicoRepository.findById(id);
@@ -107,6 +110,7 @@ public class TopicosController {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
+	@CacheEvict(value="listaDeTopicos",allEntries = true) // Limpa cache de listaDeTopicos devido a uma escrita na base de dados
 	public ResponseEntity<?> remover(@PathVariable Long id){
 		
 		Optional<Topico> optional = topicoRepository.findById(id);
